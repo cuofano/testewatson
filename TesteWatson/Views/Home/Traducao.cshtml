@@ -1,0 +1,41 @@
+﻿@model TesteWatson.Models.TraducaoModels
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Traducao</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        <p>Texto para tradução : @Html.TextBoxFor(m => m.strTextoOriginal)</p>
+
+        <p>
+            Idioma Original : @Html.DropDownListFor(m => m.strLinguaOriginal, new[]{
+                             new SelectListItem() {Text = "Português", Value = "pt"},
+                             new SelectListItem() {Text= "Inglês", Value= "en"},
+                             new SelectListItem() {Text= "Espanhol", Value= "es"},
+                         }, "Seleciona o idioma original")
+        </p>
+
+        <p>
+            Idioma Tradução : @Html.DropDownListFor(m => m.strLinguaTraducao, new[]{
+                        new SelectListItem() {Text = "Português", Value = "pt"},
+                        new SelectListItem() {Text= "Inglês", Value= "en"},
+                        new SelectListItem() {Text= "Espanhol", Value= "es"},
+                        }, "Seleciona o idioma da tradução")
+        </p>
+
+        <input type="submit" value="Traduzir" />
+
+        <p> Texto traduzido : @ViewBag.resultado </p> //
+
+    }
+</body>
+</html>
