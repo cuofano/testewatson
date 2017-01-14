@@ -33,13 +33,17 @@ namespace TesteWatson.Controllers
 
         private string Traduzir(TraducaoModels traducao)
         {
-            
+            /*{
+              "url": "https://gateway.watsonplatform.net/language-translator/api",
+              "password": "k4NCxrQHQKRQ",
+              "username": "998e5723-0e90-454e-9f31-2930a7643144"
+            } */
             WebRequest request = WebRequest.Create("https://gateway.watsonplatform.net/language-translator/api/v2/translate?source=" + traducao.strLinguaOriginal 
                                                     + "&target=" + traducao.strLinguaTraducao 
                                                     + "&text=" + traducao.strTextoOriginal
                                                     );
 
-            request.Credentials = new NetworkCredential("237a3d1a-3fc5-4627-84a0-ecc251855166", "3RD2edAA0E7f");
+            request.Credentials = new NetworkCredential("998e5723-0e90-454e-9f31-2930a7643144", "k4NCxrQHQKRQ");
             WebResponse response = request.GetResponse();
 
             using (var twitpicResponse = (HttpWebResponse)request.GetResponse())
