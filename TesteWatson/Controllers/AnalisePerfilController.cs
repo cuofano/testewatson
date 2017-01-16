@@ -65,19 +65,24 @@ namespace TesteWatson.Controllers
             var request = (HttpWebRequest)WebRequest.Create("https://gateway.watsonplatform.net/language-translator/api/v2/translate");
 
             request.Credentials = new NetworkCredential("998e5723-0e90-454e-9f31-2930a7643144", "k4NCxrQHQKRQ");
-            request.ContentType = "application / json";
-            var jsontraduz = "{\"source\":\"en\", \"target\":\"pt\":\"text\", mensagem }";
-            var result = new JsonResult
-            {
-                [Data = JsonConvert.DeserializeObject(jsontraduz)
-            };
+            request.ContentType = "application/json";
+            request.Method = "POST";
+
+            GerarJsonConsulta gjc = new GerarJsonConsulta();
+            gjc.source = "en";
+            gjc.target = "pt";
+            gjc.model_id = "0000093";
+            gjc.text = mensagem;
+            var arqJSon = JsonConvert.SerializeObject(gjc);
+           
+
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
-                streamWriter.Write(result.Data);
-                streamWriter.Flush();
+                streamWriter.Write( arqJSon);
+                streamWriter.Flush( );
                 streamWriter.Close();
             }
-            request.Method = "POST";
+            //Erro 494 - validar metodo post....
             var httpResponse = (HttpWebResponse)request.GetResponse();
 
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
