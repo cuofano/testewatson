@@ -46,14 +46,67 @@ namespace TesteWatson.Controllers
                 streamWriter.Close();
             }
             var httpResponse = (HttpWebResponse)request.GetResponse();
+
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 string resultado = streamReader.ReadToEnd();
-                //var model = JsonConvert.DeserializeObject<IEnumerable<RetornoApiPerfil>>(resultado);
                 var model = JsonConvert.DeserializeObject<RetornoApiPerfil>(resultado);
-                return resultado;
+                return Traduzir(resultado);
             }
         }
 
+        private string Traduzir(string mensagem)
+        {
+            /*{
+              "url": "https://gateway.watsonplatform.net/language-translator/api",
+              "password": "k4NCxrQHQKRQ",
+              "username": "998e5723-0e90-454e-9f31-2930a7643144"
+            } */
+            var request = (HttpWebRequest)WebRequest.Create("https://gateway.watsonplatform.net/language-translator/api/v2/translate");
+
+            request.Credentials = new NetworkCredential("998e5723-0e90-454e-9f31-2930a7643144", "k4NCxrQHQKRQ");
+            request.ContentType = "application / json";
+            var jsontraduz = "{\"source\":\"en\", \"target\":\"pt\":\"text\", mensagem }";
+            var result = new JsonResult
+            {
+                [Data = JsonConvert.DeserializeObject(jsontraduz)
+            };
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(result.Data);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            request.Method = "POST";
+            var httpResponse = (HttpWebResponse)request.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                string resultado = streamReader.ReadToEnd();
+                return resultado;
+            }
+
+            /*
+
+
+
+            WebResponse response = request.GetResponse();
+
+            using (var twitpicResponse = (HttpWebResponse)request.GetResponse())
+            {
+
+                using (var reader = new StreamReader(twitpicResponse.GetResponseStream()))
+                {
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    var strTraducao = reader.ReadToEnd();
+                    //RetornoApiTraducaoModel myojb = (RetornoApiTraducaoModel)js.Deserialize(objText, typeof(RetornoApiTraducaoModel));
+                    return strTraducao;
+                }
+
+            }
+            */
+
+        }
     }
 }
+
