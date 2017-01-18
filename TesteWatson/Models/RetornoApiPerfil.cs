@@ -77,69 +77,21 @@ namespace TesteWatson.Models
 
 
 
+public class JSONInputAnalise
+    {
+        public List<ContentItems> contentItems { get; set; }
 
-    /*
-    public long word_count { get; set; }
-    public string processed_language { get; set; }
-    public IEnumerable<Personalidade> personality { get; set; }
-    public IEnumerable<Necessidades>needs { get; set; }
-    public IEnumerable<Valores> values { get; set; }
-    public IEnumerable<Comportamento> behavior { get; set; }
-    public IEnumerable<PreferenciasConsumidor> consumption_preferences { get; set; }
-}
-public class Personalidade
-{
-    public string trait_id { get; set; }
-    public string name { get; set; }
-    public string category { get; set; }
-    public long percentile { get; set; }
-    public long raw_score { get; set; }
-    public IEnumerable<Filho> children { get; set; }
-
-}
-public class Filho
-{
-    public string trait_id { get; set; }
-    public string name { get; set; }
-    public string category { get; set; }
-    public long percentile { get; set; }
-    public long raw_score { get; set; }
-}
-public class Necessidades
-{
-    public string trait_id { get; set; }
-    public string name { get; set; }
-    public string category { get; set; }
-    public long percentile { get; set; }
-    public long raw_score { get; set; }
-}
-public class Valores
-{
-    public string trait_id { get; set; }
-    public string name { get; set; }
-    public string category { get; set; }
-    public long percentile { get; set; }
-    public long raw_score { get; set; }
-}
-public class Comportamento
-{
-    public string trait_id { get; set; }
-    public string name { get; set; }
-    public string category { get; set; }
-    public long percentile { get; set; }
-}
-public class PreferenciasConsumidor
-{
-    public string consumption_preference_category_id { get; set; }
-    public string name { get; set; }
-    public IEnumerable<RankPreferenciasConsumidor> consumption_preferences { get; set; }
-}
-public class RankPreferenciasConsumidor
-{
-    public string consumption_preference_category_id { get; set; }
-    public string name { get; set; }
-    public int score { get; set; }
-}
-*/
+        public JSONInputAnalise()
+        {
+            this.contentItems = new List<ContentItems>();
+        }
+    }
+    public class ContentItems
+    {
+        public string contenttype { get; set; }
+        public string language { get; set; }
+        public string id { get; set; }
+        public string content { get; set; }
+    }
 
 }

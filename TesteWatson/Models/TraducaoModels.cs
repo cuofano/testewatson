@@ -18,8 +18,8 @@ namespace TesteWatson.Models
     {
         public string source { get; set; }
         public string target { get; set; }
-        public string text { get; set; }
-        public string model_id { get; set; }
+        public string[] text { get; set; }
+        //public string model_id { get; set; }
         
 
 

@@ -1,23 +1,27 @@
-﻿
+﻿@model IEnumerable<TesteWatson.Models.RetornoApiPerfil>
+<html>
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 
-<form action="" method="post" enctype="multipart/form-data">
+<h2>Basic File Upload</h2>
+@using (Html.BeginForm("LerArquivo",
+                                    "Arquivos",
+                                    FormMethod.Post,
+                                    new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Novo documento:</label>
+    <input type="file" name="file" id="file" />
+    <br>
+    <br>
+    <input type="submit" value="Upload document" />
+    <br>
+    <br>
 
-    <p>
-        <label for="file">Filename:</label>
-   
-        <input type="file" name="file" id="file" /></p>
-    <p>
-        <input type="submit" /> </p>
+    <pre>
+        @ViewBag.resultado
+    </pre>
+}  
 
-
-
-<p>Aqui vai a análise de perfil</p> 
-
-    <p/>
-    <p/>
-    
-        
-</form>
-
-
+</html>

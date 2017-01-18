@@ -51,11 +51,12 @@ namespace TesteWatson.Controllers
             {
                 string resultado = streamReader.ReadToEnd();
                 var model = JsonConvert.DeserializeObject<RetornoApiPerfil>(resultado);
-                return Traduzir(resultado);
+                return TraduzirPost(resultado);//resultado;
             }
+
         }
 
-        private string Traduzir(string mensagem)
+        public string TraduzirPost(string mensagem)
         {
             /*{
               "url": "https://gateway.watsonplatform.net/language-translator/api",
@@ -68,21 +69,23 @@ namespace TesteWatson.Controllers
             request.ContentType = "application/json";
             request.Method = "POST";
 
+            var json = "{source : en, target : pt, model_id = 0000693, text: " + mensagem + "}";
             GerarJsonConsulta gjc = new GerarJsonConsulta();
+
             gjc.source = "en";
             gjc.target = "pt";
-            gjc.model_id = "0000093";
-            gjc.text = mensagem;
-            var arqJSon = JsonConvert.SerializeObject(gjc);
-           
+            //gjc.model_id = "0000093";
+            gjc.text = new string[] { mensagem };
+            var arqJSon = Json(json);
+
 
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
-                streamWriter.Write( arqJSon);
-                streamWriter.Flush( );
+                streamWriter.Write(arqJSon);
+                streamWriter.Flush();
                 streamWriter.Close();
             }
-            //Erro 494 - validar metodo post....
+            //Erro 404 - validar metodo post....
             var httpResponse = (HttpWebResponse)request.GetResponse();
 
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -112,6 +115,7 @@ namespace TesteWatson.Controllers
             */
 
         }
+
     }
 }
 
