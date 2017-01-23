@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="personalteacherModelStoreContainer" CdmEntityContainer="personalteacherEntities">
+    <EntitySetMapping Name="alunoes">
+      <EntityTypeMapping TypeName="personalteacherModel.aluno">
+        <MappingFragment StoreEntitySet="aluno">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="escola_id" ColumnName="escola_id" />
+          <ScalarProperty Name="matricula" ColumnName="matricula" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="dtnascimento" ColumnName="dtnascimento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="analises">
+      <EntityTypeMapping TypeName="personalteacherModel.analise">
+        <MappingFragment StoreEntitySet="analise">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="dtanalise" ColumnName="dtanalise" />
+          <ScalarProperty Name="qtdpalavras" ColumnName="qtdpalavras" />
+          <ScalarProperty Name="resultado" ColumnName="resultado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="arquivoanalises">
+      <EntityTypeMapping TypeName="personalteacherModel.arquivoanalise">
+        <MappingFragment StoreEntitySet="arquivoanalise">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="arquivobase_id" ColumnName="arquivobase_id" />
+          <ScalarProperty Name="analise_id" ColumnName="analise_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="arquivobases">
+      <EntityTypeMapping TypeName="personalteacherModel.arquivobase">
+        <MappingFragment StoreEntitySet="arquivobase">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="aluno_id" ColumnName="aluno_id" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="arquivo" ColumnName="arquivo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="escolas">
+      <EntityTypeMapping TypeName="personalteacherModel.escola">
+        <MappingFragment StoreEntitySet="escola">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="cnpj" ColumnName="cnpj" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="traducaoarquivoes">
+      <EntityTypeMapping TypeName="personalteacherModel.traducaoarquivo">
+        <MappingFragment StoreEntitySet="traducaoarquivo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="arquivobase_id" ColumnName="arquivobase_id" />
+          <ScalarProperty Name="qtdpalavras" ColumnName="qtdpalavras" />
+          <ScalarProperty Name="qtdletras" ColumnName="qtdletras" />
+          <ScalarProperty Name="textotraduzido" ColumnName="textotraduzido" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuarios">
+      <EntityTypeMapping TypeName="personalteacherModel.usuario">
+        <MappingFragment StoreEntitySet="usuario">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="escola_id" ColumnName="escola_id" />
+          <ScalarProperty Name="cpf" ColumnName="cpf" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="senha" ColumnName="senha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="view_escola">
+      <EntityTypeMapping TypeName="personalteacherModel.view_escola">
+        <MappingFragment StoreEntitySet="view_escola">
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

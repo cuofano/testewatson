@@ -29,5 +29,7 @@ namespace TesteWatson.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<TesteWatson.Models.AlunoModels> AlunoModels { get; set; }
     }
 }

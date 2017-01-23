@@ -1,0 +1,50 @@
+﻿@model TesteWatson.Models.aluno
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Cadastro de Alunos</title>
+    </head>
+    <body>
+        <h1>Cadastro de Alunos</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <div class="editor-label">Escola</div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.escola_id, new SelectList(ViewBag.escola, "Value", "Text"))
+                    @Html.ValidationMessageFor(model => model.escola_id)
+                </div>
+                <div class="editor-label">Nome</div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.nome)
+                    @Html.ValidationMessageFor(model => model.nome)
+                </div>
+                <p />
+                <div class="editor-label">Matrícula</div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.matricula)
+                    @Html.ValidationMessageFor(model => model.matricula)
+                </div>
+                <p/>
+                <div class="editor-label">Data de nascimento</div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.dtnascimento)
+                    @Html.ValidationMessageFor(model => model.dtnascimento)
+                </div>
+                <p />
+                <input type="submit" value="Cadastrar" />
+            </fieldset>
+        }
+
+</body>
+
+</html>

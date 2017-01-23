@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="personalteacherModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="aluno">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="escola_id" Type="int" Nullable="false" />
+          <Property Name="matricula" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="nome" Type="varchar(max)" Nullable="false" />
+          <Property Name="dtnascimento" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="analise">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dtanalise" Type="datetime" Nullable="false" />
+          <Property Name="qtdpalavras" Type="float" Nullable="false" />
+          <Property Name="resultado" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="arquivoanalise">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="arquivobase_id" Type="int" Nullable="false" />
+          <Property Name="analise_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="arquivobase">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aluno_id" Type="int" Nullable="false" />
+          <Property Name="nome" Type="varchar(max)" Nullable="false" />
+          <Property Name="arquivo" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="escola">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cnpj" Type="char" MaxLength="14" Nullable="false" />
+        </EntityType>
+        <EntityType Name="traducaoarquivo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="arquivobase_id" Type="int" Nullable="false" />
+          <Property Name="qtdpalavras" Type="int" />
+          <Property Name="qtdletras" Type="float" />
+          <Property Name="textotraduzido" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="escola_id" Type="int" Nullable="false" />
+          <Property Name="cpf" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="nome" Type="varchar(max)" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="senha" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="view_escola">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="nome" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_arquivoanalise_analise">
+          <End Role="analise" Type="Self.analise" Multiplicity="1" />
+          <End Role="arquivoanalise" Type="Self.arquivoanalise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="analise">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="arquivoanalise">
+              <PropertyRef Name="analise_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_arquivoanalise_arquivobase">
+          <End Role="arquivobase" Type="Self.arquivobase" Multiplicity="1" />
+          <End Role="arquivoanalise" Type="Self.arquivoanalise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="arquivobase">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="arquivoanalise">
+              <PropertyRef Name="arquivobase_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_arquivobase_aluno">
+          <End Role="aluno" Type="Self.aluno" Multiplicity="1" />
+          <End Role="arquivobase" Type="Self.arquivobase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aluno">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="arquivobase">
+              <PropertyRef Name="aluno_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_escola_aluno">
+          <End Role="escola" Type="Self.escola" Multiplicity="1" />
+          <End Role="aluno" Type="Self.aluno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="escola">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aluno">
+              <PropertyRef Name="escola_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_traducaoarquivo_arquivobase">
+          <End Role="arquivobase" Type="Self.arquivobase" Multiplicity="1" />
+          <End Role="traducaoarquivo" Type="Self.traducaoarquivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="arquivobase">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="traducaoarquivo">
+              <PropertyRef Name="arquivobase_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_escola">
+          <End Role="escola" Type="Self.escola" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="escola">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="escola_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="personalteacherModelStoreContainer">
+          <EntitySet Name="aluno" EntityType="Self.aluno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="analise" EntityType="Self.analise" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="arquivoanalise" EntityType="Self.arquivoanalise" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="arquivobase" EntityType="Self.arquivobase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="escola" EntityType="Self.escola" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="traducaoarquivo" EntityType="Self.traducaoarquivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="view_escola" EntityType="Self.view_escola" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [view_escola].[id] AS [id], 
+    [view_escola].[nome] AS [nome]
+    FROM [dbo].[view_escola] AS [view_escola]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_arquivoanalise_analise" Association="Self.FK_arquivoanalise_analise">
+            <End Role="analise" EntitySet="analise" />
+            <End Role="arquivoanalise" EntitySet="arquivoanalise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_arquivoanalise_arquivobase" Association="Self.FK_arquivoanalise_arquivobase">
+            <End Role="arquivobase" EntitySet="arquivobase" />
+            <End Role="arquivoanalise" EntitySet="arquivoanalise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_arquivobase_aluno" Association="Self.FK_arquivobase_aluno">
+            <End Role="aluno" EntitySet="aluno" />
+            <End Role="arquivobase" EntitySet="arquivobase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_escola_aluno" Association="Self.FK_escola_aluno">
+            <End Role="escola" EntitySet="escola" />
+            <End Role="aluno" EntitySet="aluno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_traducaoarquivo_arquivobase" Association="Self.FK_traducaoarquivo_arquivobase">
+            <End Role="arquivobase" EntitySet="arquivobase" />
+            <End Role="traducaoarquivo" EntitySet="traducaoarquivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_escola" Association="Self.FK_usuario_escola">
+            <End Role="escola" EntitySet="escola" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="personalteacherModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="aluno">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="escola_id" Type="Int32" Nullable="false" />
+          <Property Name="matricula" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dtnascimento" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="escola" Relationship="personalteacherModel.FK_escola_aluno" FromRole="aluno" ToRole="escola" />
+          <NavigationProperty Name="arquivobases" Relationship="personalteacherModel.FK_arquivobase_aluno" FromRole="aluno" ToRole="arquivobase" />
+        </EntityType>
+        <EntityType Name="analise">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dtanalise" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="qtdpalavras" Type="Double" Nullable="false" />
+          <Property Name="resultado" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="arquivoanalises" Relationship="personalteacherModel.FK_arquivoanalise_analise" FromRole="analise" ToRole="arquivoanalise" />
+        </EntityType>
+        <EntityType Name="arquivoanalise">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="arquivobase_id" Type="Int32" Nullable="false" />
+          <Property Name="analise_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="analise" Relationship="personalteacherModel.FK_arquivoanalise_analise" FromRole="arquivoanalise" ToRole="analise" />
+          <NavigationProperty Name="arquivobase" Relationship="personalteacherModel.FK_arquivoanalise_arquivobase" FromRole="arquivoanalise" ToRole="arquivobase" />
+        </EntityType>
+        <EntityType Name="arquivobase">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aluno_id" Type="Int32" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="arquivo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="aluno" Relationship="personalteacherModel.FK_arquivobase_aluno" FromRole="arquivobase" ToRole="aluno" />
+          <NavigationProperty Name="arquivoanalises" Relationship="personalteacherModel.FK_arquivoanalise_arquivobase" FromRole="arquivobase" ToRole="arquivoanalise" />
+          <NavigationProperty Name="traducaoarquivoes" Relationship="personalteacherModel.FK_traducaoarquivo_arquivobase" FromRole="arquivobase" ToRole="traducaoarquivo" />
+        </EntityType>
+        <EntityType Name="escola">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cnpj" Type="String" MaxLength="14" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="alunoes" Relationship="personalteacherModel.FK_escola_aluno" FromRole="escola" ToRole="aluno" />
+          <NavigationProperty Name="usuarios" Relationship="personalteacherModel.FK_usuario_escola" FromRole="escola" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="traducaoarquivo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="arquivobase_id" Type="Int32" Nullable="false" />
+          <Property Name="qtdpalavras" Type="Int32" />
+          <Property Name="qtdletras" Type="Double" />
+          <Property Name="textotraduzido" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="arquivobase" Relationship="personalteacherModel.FK_traducaoarquivo_arquivobase" FromRole="traducaoarquivo" ToRole="arquivobase" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="escola_id" Type="Int32" Nullable="false" />
+          <Property Name="cpf" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="senha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="escola" Relationship="personalteacherModel.FK_usuario_escola" FromRole="usuario" ToRole="escola" />
+        </EntityType>
+        <EntityContainer Name="personalteacherEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="alunoes" EntityType="Self.aluno" />
+          <EntitySet Name="analises" EntityType="Self.analise" />
+          <EntitySet Name="arquivoanalises" EntityType="Self.arquivoanalise" />
+          <EntitySet Name="arquivobases" EntityType="Self.arquivobase" />
+          <EntitySet Name="escolas" EntityType="Self.escola" />
+          <EntitySet Name="traducaoarquivoes" EntityType="Self.traducaoarquivo" />
+          <EntitySet Name="usuarios" EntityType="Self.usuario" />
+          <AssociationSet Name="FK_escola_aluno" Association="personalteacherModel.FK_escola_aluno">
+            <End Role="escola" EntitySet="escolas" />
+            <End Role="aluno" EntitySet="alunoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_arquivobase_aluno" Association="personalteacherModel.FK_arquivobase_aluno">
+            <End Role="aluno" EntitySet="alunoes" />
+            <End Role="arquivobase" EntitySet="arquivobases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_arquivoanalise_analise" Association="personalteacherModel.FK_arquivoanalise_analise">
+            <End Role="analise" EntitySet="analises" />
+            <End Role="arquivoanalise" EntitySet="arquivoanalises" />
+          </AssociationSet>
+          <AssociationSet Name="FK_arquivoanalise_arquivobase" Association="personalteacherModel.FK_arquivoanalise_arquivobase">
+            <End Role="arquivobase" EntitySet="arquivobases" />
+            <End Role="arquivoanalise" EntitySet="arquivoanalises" />
+          </AssociationSet>
+          <AssociationSet Name="FK_traducaoarquivo_arquivobase" Association="personalteacherModel.FK_traducaoarquivo_arquivobase">
+            <End Role="arquivobase" EntitySet="arquivobases" />
+            <End Role="traducaoarquivo" EntitySet="traducaoarquivoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_escola" Association="personalteacherModel.FK_usuario_escola">
+            <End Role="escola" EntitySet="escolas" />
+            <End Role="usuario" EntitySet="usuarios" />
+          </AssociationSet>
+          <EntitySet Name="view_escola" EntityType="personalteacherModel.view_escola" />
+        </EntityContainer>
+        <Association Name="FK_escola_aluno">
+          <End Type="personalteacherModel.escola" Role="escola" Multiplicity="1" />
+          <End Type="personalteacherModel.aluno" Role="aluno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="escola">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="aluno">
+              <PropertyRef Name="escola_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_arquivobase_aluno">
+          <End Type="personalteacherModel.aluno" Role="aluno" Multiplicity="1" />
+          <End Type="personalteacherModel.arquivobase" Role="arquivobase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aluno">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="arquivobase">
+              <PropertyRef Name="aluno_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_arquivoanalise_analise">
+          <End Type="personalteacherModel.analise" Role="analise" Multiplicity="1" />
+          <End Type="personalteacherModel.arquivoanalise" Role="arquivoanalise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="analise">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="arquivoanalise">
+              <PropertyRef Name="analise_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_arquivoanalise_arquivobase">
+          <End Type="personalteacherModel.arquivobase" Role="arquivobase" Multiplicity="1" />
+          <End Type="personalteacherModel.arquivoanalise" Role="arquivoanalise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="arquivobase">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="arquivoanalise">
+              <PropertyRef Name="arquivobase_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_traducaoarquivo_arquivobase">
+          <End Type="personalteacherModel.arquivobase" Role="arquivobase" Multiplicity="1" />
+          <End Type="personalteacherModel.traducaoarquivo" Role="traducaoarquivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="arquivobase">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="traducaoarquivo">
+              <PropertyRef Name="arquivobase_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_escola">
+          <End Type="personalteacherModel.escola" Role="escola" Multiplicity="1" />
+          <End Type="personalteacherModel.usuario" Role="usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="escola">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="escola_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="view_escola">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="nome" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="personalteacherModelStoreContainer" CdmEntityContainer="personalteacherEntities">
+          <EntitySetMapping Name="alunoes">
+            <EntityTypeMapping TypeName="personalteacherModel.aluno">
+              <MappingFragment StoreEntitySet="aluno">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="escola_id" ColumnName="escola_id" />
+                <ScalarProperty Name="matricula" ColumnName="matricula" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="dtnascimento" ColumnName="dtnascimento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="analises">
+            <EntityTypeMapping TypeName="personalteacherModel.analise">
+              <MappingFragment StoreEntitySet="analise">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="dtanalise" ColumnName="dtanalise" />
+                <ScalarProperty Name="qtdpalavras" ColumnName="qtdpalavras" />
+                <ScalarProperty Name="resultado" ColumnName="resultado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="arquivoanalises">
+            <EntityTypeMapping TypeName="personalteacherModel.arquivoanalise">
+              <MappingFragment StoreEntitySet="arquivoanalise">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="arquivobase_id" ColumnName="arquivobase_id" />
+                <ScalarProperty Name="analise_id" ColumnName="analise_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="arquivobases">
+            <EntityTypeMapping TypeName="personalteacherModel.arquivobase">
+              <MappingFragment StoreEntitySet="arquivobase">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="aluno_id" ColumnName="aluno_id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="arquivo" ColumnName="arquivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="escolas">
+            <EntityTypeMapping TypeName="personalteacherModel.escola">
+              <MappingFragment StoreEntitySet="escola">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="cnpj" ColumnName="cnpj" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="traducaoarquivoes">
+            <EntityTypeMapping TypeName="personalteacherModel.traducaoarquivo">
+              <MappingFragment StoreEntitySet="traducaoarquivo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="arquivobase_id" ColumnName="arquivobase_id" />
+                <ScalarProperty Name="qtdpalavras" ColumnName="qtdpalavras" />
+                <ScalarProperty Name="qtdletras" ColumnName="qtdletras" />
+                <ScalarProperty Name="textotraduzido" ColumnName="textotraduzido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="personalteacherModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="escola_id" ColumnName="escola_id" />
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_escola">
+            <EntityTypeMapping TypeName="personalteacherModel.view_escola">
+              <MappingFragment StoreEntitySet="view_escola">
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
