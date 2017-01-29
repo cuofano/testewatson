@@ -8,6 +8,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TesteWatson.Models;
+using Microsoft.Office.Interop.Word;
+using Microsoft.Office;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace TesteWatson.Controllers
 {
@@ -21,11 +25,123 @@ namespace TesteWatson.Controllers
 
             personalteacherEntities entities = new personalteacherEntities();
             ViewBag.aluno = new SelectList(entities.alunoes, "id", "nome" );
-
             var arquivobases = db.arquivobases.Include(a => a.aluno);
             return View(arquivobases.ToList());
         }
+        [HttpPost]
+        public ActionResult Index( int[] SelectedFiles)
+        {
+            List<view_documentotraducao> arquivos = new List<view_documentotraducao>();
 
+            arquivos = db.view_documentotraducao.ToList();
+            //retornando os IDs dos arquivos
+            string documentoAnalisado = AnalisarDocumento(arquivos);
+            return RedirectToAction("Index");
+        }
+
+
+        private string AnalisarDocumento(List<view_documentotraducao> arquivos)
+        {
+            string json = "";
+            /*{
+              "url": "https://gateway.watsonplatform.net/personality-insights/api",
+              "password": "za4z3gyaD4TG",
+              "username": "75013c0a-5348-4af9-add7-d42a08fea139"
+            }*/
+
+            var request = (HttpWebRequest)WebRequest.Create("https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2016-10-20&consumption_preferences=true&raw_scores=true");
+
+            request.Credentials = new NetworkCredential("75013c0a-5348-4af9-add7-d42a08fea139", "za4z3gyaD4TG");
+            request.ContentType = "application/json";
+            request.Method = "POST";
+            request.Headers.Add("Accept-Language: pt-br");
+
+            ContentItems contentItems = new ContentItems();
+
+            foreach(view_documentotraducao arq in arquivos)
+            {
+                contentItems.language = "en";
+                contentItems.contenttype = "text/plain";
+                contentItems.id = arq.id.ToString();
+                if (arq.textotraduzido == null) {
+                    arq.textotraduzido = TraduzirPost(arq.id,arq.textodocumento);
+                }
+                contentItems.content = arq.textotraduzido;
+
+                JSONInputAnalise jsonInputAnalise = new JSONInputAnalise();
+                jsonInputAnalise.contentItems.Add(contentItems);
+
+                json = JsonConvert.SerializeObject(jsonInputAnalise, Formatting.Indented);
+            }
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)request.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                string resultado = streamReader.ReadToEnd();
+                var model = JsonConvert.DeserializeObject<RetornoApiPerfil>(resultado);
+                return JsonConvert.SerializeObject(model, Formatting.Indented);//resultado;
+            }
+        }
+
+        private string TraduzirPost(int iddocumento,string mensagem)
+        {
+            /*{
+              "url": "https://gateway.watsonplatform.net/language-translator/api",
+              "password": "k4NCxrQHQKRQ",
+              "username": "998e5723-0e90-454e-9f31-2930a7643144"
+            } */
+            var request = (HttpWebRequest)WebRequest.Create("https://gateway.watsonplatform.net/language-translator/api/v2/translate");
+
+            request.Credentials = new NetworkCredential("998e5723-0e90-454e-9f31-2930a7643144", "k4NCxrQHQKRQ");
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+            request.Headers.Add("ContentType: application/json");
+            request.Method = "POST";
+
+            GerarJsonConsulta gjc = new GerarJsonConsulta();
+            gjc.source = "pt";
+            gjc.target = "en";
+            gjc.text = new string[] { mensagem };
+            string arqJSon = JsonConvert.SerializeObject(gjc, Formatting.Indented);
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(arqJSon);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            //Erro 404 - validar metodo post....
+            var httpResponse = (HttpWebResponse)request.GetResponse();
+
+            var streamReader = new StreamReader(httpResponse.GetResponseStream());
+            string resultado = streamReader.ReadToEnd();
+            var model = JsonConvert.DeserializeObject<RetornoApiTraducaoModel>(resultado);
+            return (GravarTraducao(iddocumento, model));
+             
+        }
+
+        private string GravarTraducao(int arquivoid, RetornoApiTraducaoModel respTraducao)
+        {
+            
+            traducaoarquivo tradArquivo = new traducaoarquivo();
+            tradArquivo.arquivobase_id = arquivoid;
+            tradArquivo.qtdletras = respTraducao.character_count;
+            tradArquivo.qtdpalavras = respTraducao.word_count;
+            foreach(Traduzir traduzido in respTraducao.translations)
+            {
+                tradArquivo.textotraduzido = traduzido.translation;
+            }
+            db.traducaoarquivoes.Add(tradArquivo);
+            db.SaveChanges();
+            return tradArquivo.textotraduzido;
+        }
         // GET: arquivobases/Details/5
         public ActionResult Details(int? id)
         {
@@ -33,7 +149,7 @@ namespace TesteWatson.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            arquivobase arquivobase = db.arquivobases.Find(id);
+            arquivobas arquivobase = db.arquivobases.Find(id);
             if (arquivobase == null)
             {
                 return HttpNotFound();
@@ -53,31 +169,95 @@ namespace TesteWatson.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,aluno_id,nome,arquivo")] arquivobase arquivobase, HttpPostedFileBase file)
+        public ActionResult Create ([Bind(Include = "id,aluno_id,nome,arquivo")] arquivobas arquivobase, HttpPostedFileBase file)
         {
-            //download do arquivo 
-
-            //transformar em texto
-
             //transformar em array de byte
-            byte[] fileContent = null;
-
-            Stream arquivo = file.InputStream;
-
-            System.IO.FileStream fs = new System.IO.FileStream(arquivo, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            System.IO.BinaryReader binaryReader = new System.IO.BinaryReader(fs);
-            long byteLength = new System.IO.FileInfo(arquivo).Length;
-            fileContent = binaryReader.ReadBytes((Int32)byteLength);
-
-            if (ModelState.IsValid)
+            if (file != null && file.ContentLength > 0)
             {
-                db.arquivobases.Add(arquivobase);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            ViewBag.aluno_id = new SelectList(db.alunoes, "id", "matricula", arquivobase.aluno_id);
+                //GravarArquivo
+                var fileName = Guid.NewGuid() + "_" + Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                file.SaveAs(path);
+
+                //Retornar array do txt
+                string textoDocumento = RetornarDadosArquivo(Path.GetDirectoryName(path), fileName);
+                
+               
+                if (ModelState.IsValid)
+                {
+                    arquivobase.textodocumento = textoDocumento;
+                    arquivobase.arquivo = path;
+                    arquivobase.dtupload = DateTime.Now;
+                    db.arquivobases.Add(arquivobase);
+                    db.SaveChanges();
+                    
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.aluno_id = new SelectList(db.alunoes, "id", "matricula", arquivobase.aluno_id);
+                return View(arquivobase);
+            }
             return View(arquivobase);
+        }
+
+
+        private string RetornarDadosArquivo(string caminho, string arquivo)
+        {
+            object missingType = Type.Missing;
+
+            //abrir word
+            object word = Path.Combine(caminho, arquivo);
+            ApplicationClass applicationclass = new ApplicationClass();
+            applicationclass.Documents.Open(ref word, true,
+                                    ref missingType, ref missingType, ref missingType,
+                                    ref missingType, ref missingType, ref missingType,
+                                    ref missingType, ref missingType, false,
+                                    ref missingType, ref missingType, ref missingType,
+                                    ref missingType, ref missingType);
+
+            applicationclass.Visible = false;
+            //salvartxt
+            Document document = applicationclass.ActiveDocument;
+            object arquivoText = Path.Combine(caminho, Guid.NewGuid() + ".txt");
+            object format = Microsoft.Office.Interop.Word.WdSaveFormat.wdFormatText;
+            applicationclass.ActiveDocument.SaveAs(ref arquivoText, ref format,
+                                                    ref missingType, ref missingType, ref missingType,
+                                                    ref missingType, ref missingType, ref missingType,
+                                                    ref missingType, ref missingType, ref missingType,
+                                                    ref missingType, ref missingType, ref missingType,
+                                                   ref missingType, ref missingType);
+
+
+
+            //Close the word document
+            document.Close(ref missingType, ref missingType, ref missingType);
+           
+
+            using (StreamReader fs = new StreamReader(arquivoText.ToString(), Encoding.GetEncoding("Windows-1252")))
+            {
+                return fs.ReadToEnd();
+                
+            }
+                       
+
+        }
+
+        private void TextoDoc(MemoryStream target)
+        {
+            /*object missingType = Type.Missing;
+
+            ApplicationClass applicationclass = new ApplicationClass();
+            applicationclass.Documents.Open(ref target, true,
+                                    ref missingType, ref missingType, ref missingType,
+                                    ref missingType, ref missingType, ref missingType,
+                                    ref missingType, ref missingType, false,
+                                    ref missingType, ref missingType, ref missingType,
+                                    ref missingType, ref missingType);
+
+            applicationclass.Visible = false;
+            */
+
         }
 
         // GET: arquivobases/Edit/5
@@ -87,7 +267,7 @@ namespace TesteWatson.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            arquivobase arquivobase = db.arquivobases.Find(id);
+            arquivobas arquivobase = db.arquivobases.Find(id);
             if (arquivobase == null)
             {
                 return HttpNotFound();
@@ -101,7 +281,7 @@ namespace TesteWatson.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,aluno_id,nome,arquivo")] arquivobase arquivobase)
+        public ActionResult Edit([Bind(Include = "id,aluno_id,nome,arquivo")] arquivobas arquivobase)
         {
             if (ModelState.IsValid)
             {
@@ -120,7 +300,7 @@ namespace TesteWatson.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            arquivobase arquivobase = db.arquivobases.Find(id);
+            arquivobas arquivobase = db.arquivobases.Find(id);
             if (arquivobase == null)
             {
                 return HttpNotFound();
@@ -133,7 +313,7 @@ namespace TesteWatson.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            arquivobase arquivobase = db.arquivobases.Find(id);
+            arquivobas arquivobase = db.arquivobases.Find(id);
             db.arquivobases.Remove(arquivobase);
             db.SaveChanges();
             return RedirectToAction("Index");

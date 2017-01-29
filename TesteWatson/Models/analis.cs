@@ -12,20 +12,20 @@ namespace TesteWatson.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class analise
+    public partial class analis
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public analise()
+        public analis()
         {
-            this.arquivoanalises = new HashSet<arquivoanalise>();
+            this.arquivoanalises = new HashSet<arquivoanalis>();
         }
     
         public int id { get; set; }
         public System.DateTime dtanalise { get; set; }
         public double qtdpalavras { get; set; }
-        public byte[] resultado { get; set; }
+        public string resultado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<arquivoanalise> arquivoanalises { get; set; }
+        public virtual ICollection<arquivoanalis> arquivoanalises { get; set; }
     }
 }

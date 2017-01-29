@@ -1,11 +1,11 @@
-﻿@model IEnumerable<TesteWatson.Models.arquivobase>
+﻿@model IEnumerable<TesteWatson.Models.arquivobas>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Arquivos para análise";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Arquivos para análise</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -14,44 +14,50 @@
     @Html.DropDownList("aluno")
    
 </div>
+<p/><p /><p />
+@using (Html.BeginForm("Index", "arquivobases", FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>
+                Arquivo
+            </th>
+            <th>
+                Data upload
+            </th>
+            <th>
+                Aluno
+            </th>
+        
+        
+            <th></th>
+        </tr>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.arquivo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.aluno.matricula)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.aluno.nome)
-        </th>
-        <th></th>
-    </tr>
+         @foreach (var item in Model) {
+        <tr>
+            <td>
+                <input type="checkbox" name="SelectedFiles" value=@item.id />@Html.DisplayFor(modelItem => item.nome)
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.arquivo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.aluno.matricula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.aluno.nome)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
-
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dtupload)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.aluno.nome)
+            </td>
+       
+        
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            </td>
+        </tr>
+    
+    }
+    
 </table>
+<p />
+
+    <input type="submit" value="Analisar" />
+}

@@ -12,23 +12,25 @@ namespace TesteWatson.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class arquivobase
+    public partial class arquivobas
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public arquivobase()
+        public arquivobas()
         {
-            this.arquivoanalises = new HashSet<arquivoanalise>();
+            this.arquivoanalises = new HashSet<arquivoanalis>();
             this.traducaoarquivoes = new HashSet<traducaoarquivo>();
         }
     
         public int id { get; set; }
         public int aluno_id { get; set; }
         public string nome { get; set; }
-        public byte[] arquivo { get; set; }
+        public string arquivo { get; set; }
+        public System.DateTime dtupload { get; set; }
+        public string textodocumento { get; set; }
     
         public virtual aluno aluno { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<arquivoanalise> arquivoanalises { get; set; }
+        public virtual ICollection<arquivoanalis> arquivoanalises { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<traducaoarquivo> traducaoarquivoes { get; set; }
     }

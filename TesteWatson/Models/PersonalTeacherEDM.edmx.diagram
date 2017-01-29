@@ -4,21 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="638bd7100ecf48fd9d21ecaab669f75e" Name="Diagram1">
-        <EntityTypeShape EntityType="personalteacherModel.aluno" Width="1.5" PointX="4.5" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="personalteacherModel.analise" Width="1.5" PointX="7.625" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="personalteacherModel.arquivoanalise" Width="1.5" PointX="2.25" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="personalteacherModel.arquivobase" Width="1.5" PointX="2.125" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="personalteacherModel.escola" Width="1.5" PointX="1" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="personalteacherModel.traducaoarquivo" Width="1.5" PointX="6.875" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="personalteacherModel.usuario" Width="1.5" PointX="7.625" PointY="0.5" IsExpanded="true" />
-        <AssociationConnector Association="personalteacherModel.FK_escola_aluno" />
+      <Diagram DiagramId="638bd7100ecf48fd9d21ecaab669f75e" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="personalteacherModel.aluno" Width="1.5" PointX="3" PointY="5.625" />
+        <EntityTypeShape EntityType="personalteacherModel.analis" Width="1.5" PointX="5.25" PointY="1.75" />
+        <EntityTypeShape EntityType="personalteacherModel.arquivoanalis" Width="1.5" PointX="7.5" PointY="4.75" />
+        <EntityTypeShape EntityType="personalteacherModel.arquivobas" Width="1.5" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="personalteacherModel.escola" Width="1.5" PointX="0.75" PointY="4.25" />
+        <EntityTypeShape EntityType="personalteacherModel.traducaoarquivo" Width="1.5" PointX="7.5" PointY="8.375" />
+        <EntityTypeShape EntityType="personalteacherModel.usuario" Width="1.5" PointX="3" PointY="2.25" />
         <AssociationConnector Association="personalteacherModel.FK_arquivobase_aluno" />
+        <AssociationConnector Association="personalteacherModel.FK_escola_aluno" />
         <AssociationConnector Association="personalteacherModel.FK_arquivoanalise_analise" />
         <AssociationConnector Association="personalteacherModel.FK_arquivoanalise_arquivobase" />
         <AssociationConnector Association="personalteacherModel.FK_traducaoarquivo_arquivobase" />
         <AssociationConnector Association="personalteacherModel.FK_usuario_escola" />
-        <EntityTypeShape EntityType="personalteacherModel.view_escola" Width="1.5" PointX="4.375" PointY="6.75" />
+        <EntityTypeShape EntityType="personalteacherModel.view_escola" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="personalteacherModel.view_documentotraducao" Width="1.5" PointX="0.75" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -6,10 +6,7 @@
 </p>
 
 <h2>Basic File Upload</h2>
-@using (Html.BeginForm("LerArquivo",
-                                    "Arquivos",
-                                    FormMethod.Post,
-                                    new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("LerArquivo","Arquivos",FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <label for="file">Novo documento:</label>
     <input type="file" name="file" id="file" />

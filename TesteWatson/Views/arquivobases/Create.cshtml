@@ -1,4 +1,4 @@
-﻿@model TesteWatson.Models.arquivobase
+﻿@model TesteWatson.Models.arquivobas
 
 @{
     ViewBag.Title = "Create";
@@ -36,8 +36,7 @@
             @Html.LabelFor(model => model.arquivo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="file" id="file" />
-                @Html.TextBoxFor(model => model.arquivo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.arquivo, "", new { @class = "text-danger" })
+                
             </div>
         </div>
 

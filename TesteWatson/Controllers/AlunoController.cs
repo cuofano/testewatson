@@ -39,7 +39,7 @@ namespace TesteWatson.Controllers
             {
                 entities.alunoes.Add(Aluno);
                 entities.SaveChanges();
-                RedirectToAction("Index");
+                return View("Index");
             }
 
             return View("Index");

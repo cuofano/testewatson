@@ -12,14 +12,10 @@ namespace TesteWatson.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class traducaoarquivo
+    public partial class view_documentotraducao
     {
         public int id { get; set; }
-        public int arquivobase_id { get; set; }
-        public Nullable<int> qtdpalavras { get; set; }
-        public Nullable<double> qtdletras { get; set; }
+        public string textodocumento { get; set; }
         public string textotraduzido { get; set; }
-    
-        public virtual arquivobas arquivobas { get; set; }
     }
 }

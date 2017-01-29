@@ -11,31 +11,23 @@ namespace TesteWatson.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class aluno
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public aluno()
         {
-            this.arquivobases = new HashSet<arquivobase>();
+            this.arquivobases = new HashSet<arquivobas>();
         }
     
         public int id { get; set; }
         public int escola_id { get; set; }
-        [Required]
-        [StringLength(30, ErrorMessage = "O campo matrícula permite no máximo 30 caracteres!")]
         public string matricula { get; set; }
-        [Required]
         public string nome { get; set; }
-        [Required]
-        [DataType(DataType.Date)]
-        [DisplayName("data de nascimento")]
         public System.DateTime dtnascimento { get; set; }
     
-        public virtual escola escola { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<arquivobase> arquivobases { get; set; }
+        public virtual ICollection<arquivobas> arquivobases { get; set; }
+        public virtual escola escola { get; set; }
     }
 }

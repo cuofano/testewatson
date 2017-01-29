@@ -224,13 +224,13 @@
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AlunoModels.cs" />
-    <Compile Include="Models\analise.cs">
+    <Compile Include="Models\analis.cs">
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\arquivoanalise.cs">
+    <Compile Include="Models\arquivoanalis.cs">
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\arquivobase.cs">
+    <Compile Include="Models\arquivobas.cs">
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DocumentoModel.cs" />
@@ -262,6 +262,9 @@
     </Compile>
     <Compile Include="Models\TraducaoModels.cs" />
     <Compile Include="Models\usuario.cs">
+      <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\view_documentotraducao.cs">
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\view_escola.cs">

@@ -26,12 +26,13 @@ namespace TesteWatson.Models
         }
     
         public virtual DbSet<aluno> alunoes { get; set; }
-        public virtual DbSet<analise> analises { get; set; }
-        public virtual DbSet<arquivoanalise> arquivoanalises { get; set; }
-        public virtual DbSet<arquivobase> arquivobases { get; set; }
+        public virtual DbSet<analis> analises { get; set; }
+        public virtual DbSet<arquivoanalis> arquivoanalises { get; set; }
+        public virtual DbSet<arquivobas> arquivobases { get; set; }
         public virtual DbSet<escola> escolas { get; set; }
         public virtual DbSet<traducaoarquivo> traducaoarquivoes { get; set; }
         public virtual DbSet<usuario> usuarios { get; set; }
         public virtual DbSet<view_escola> view_escola { get; set; }
+        public virtual DbSet<view_documentotraducao> view_documentotraducao { get; set; }
     }
 }

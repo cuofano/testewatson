@@ -12,13 +12,13 @@ namespace TesteWatson.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class arquivoanalise
+    public partial class arquivoanalis
     {
         public int id { get; set; }
         public int arquivobase_id { get; set; }
         public int analise_id { get; set; }
     
-        public virtual analise analise { get; set; }
-        public virtual arquivobase arquivobase { get; set; }
+        public virtual analis analis { get; set; }
+        public virtual arquivobas arquivobas { get; set; }
     }
 }
