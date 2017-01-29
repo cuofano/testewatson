@@ -92,5 +92,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="view_analises">
+      <EntityTypeMapping TypeName="personalteacherModel.view_analises">
+        <MappingFragment StoreEntitySet="view_analises">
+          <ScalarProperty Name="analiseresultado" ColumnName="analiseresultado" />
+          <ScalarProperty Name="TotalArquivos" ColumnName="TotalArquivos" />
+          <ScalarProperty Name="alunonome" ColumnName="alunonome" />
+          <ScalarProperty Name="alunoid" ColumnName="alunoid" />
+          <ScalarProperty Name="analisedt" ColumnName="analisedt" />
+          <ScalarProperty Name="analiseid" ColumnName="analiseid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="view_analises_arquivos">
+      <EntityTypeMapping TypeName="personalteacherModel.view_analises_arquivos">
+        <MappingFragment StoreEntitySet="view_analises_arquivos">
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="arquivobase_id" ColumnName="arquivobase_id" />
+          <ScalarProperty Name="analise_id" ColumnName="analise_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

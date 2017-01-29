@@ -68,6 +68,35 @@
     <Property Name="senha" Type="varchar(max)" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'personalteacher.dbo.view_analises' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="view_analises">
+    <Key>
+      <PropertyRef Name="analiseid" />
+      <PropertyRef Name="analisedt" />
+      <PropertyRef Name="alunoid" />
+      <PropertyRef Name="alunonome" />
+      <PropertyRef Name="analiseresultado" />
+    </Key>
+    <Property Name="analiseid" Type="int" Nullable="false" />
+    <Property Name="analisedt" Type="datetime" Nullable="false" />
+    <Property Name="alunoid" Type="int" Nullable="false" />
+    <Property Name="alunonome" Type="varchar(max)" Nullable="false" />
+    <Property Name="TotalArquivos" Type="int" />
+    <Property Name="analiseresultado" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'personalteacher.dbo.view_analises_arquivos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="view_analises_arquivos">
+    <Key>
+      <PropertyRef Name="analise_id" />
+      <PropertyRef Name="arquivobase_id" />
+      <PropertyRef Name="nome" />
+    </Key>
+    <Property Name="analise_id" Type="int" Nullable="false" />
+    <Property Name="arquivobase_id" Type="int" Nullable="false" />
+    <Property Name="nome" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'personalteacher.dbo.view_documentotraducao' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="view_documentotraducao">
     <Key>
@@ -168,6 +197,23 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
     <EntitySet Name="escolas" EntityType="Self.escolas" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="traducaoarquivoes" EntityType="Self.traducaoarquivoes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="view_analises" EntityType="Self.view_analises" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [view_analises].[analiseid] AS [analiseid], 
+    [view_analises].[analisedt] AS [analisedt], 
+    [view_analises].[alunoid] AS [alunoid], 
+    [view_analises].[alunonome] AS [alunonome], 
+    [view_analises].[TotalArquivos] AS [TotalArquivos], 
+    [view_analises].[analiseresultado] AS [analiseresultado]
+    FROM [dbo].[view_analises] AS [view_analises]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="view_analises_arquivos" EntityType="Self.view_analises_arquivos" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [view_analises_arquivos].[analise_id] AS [analise_id], 
+    [view_analises_arquivos].[arquivobase_id] AS [arquivobase_id], 
+    [view_analises_arquivos].[nome] AS [nome]
+    FROM [dbo].[view_analises_arquivos] AS [view_analises_arquivos]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="view_documentotraducao" EntityType="Self.view_documentotraducao" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [view_documentotraducao].[id] AS [id], 

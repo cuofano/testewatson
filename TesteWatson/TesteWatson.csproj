@@ -210,7 +210,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlunoController.cs" />
     <Compile Include="Controllers\AlunoModelsController.cs" />
+    <Compile Include="Controllers\analisController.cs" />
     <Compile Include="Controllers\AnalisePerfilController.cs" />
+    <Compile Include="Controllers\analisesController.cs" />
     <Compile Include="Controllers\arquivobasesController.cs" />
     <Compile Include="Controllers\ArquivosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -262,6 +264,12 @@
     </Compile>
     <Compile Include="Models\TraducaoModels.cs" />
     <Compile Include="Models\usuario.cs">
+      <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\view_analises.cs">
+      <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\view_analises_arquivos.cs">
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\view_documentotraducao.cs">
@@ -366,6 +374,18 @@
     <Content Include="Views\arquivobases\Details.cshtml" />
     <Content Include="Views\arquivobases\Edit.cshtml" />
     <Content Include="Views\arquivobases\Index.cshtml" />
+    <Content Include="Views\analis\Create.cshtml" />
+    <Content Include="Views\analis\Delete.cshtml" />
+    <Content Include="Views\analis\Details.cshtml" />
+    <Content Include="Views\analis\Edit.cshtml" />
+    <Content Include="Views\analis\Index.cshtml" />
+    <Content Include="Views\analises\Create.cshtml" />
+    <Content Include="Views\analises\Delete.cshtml" />
+    <Content Include="Views\analises\Details.cshtml" />
+    <Content Include="Views\analises\Edit.cshtml" />
+    <Content Include="Views\analises\Index.cshtml" />
+    <Content Include="Views\Aluno\Delete.cshtml" />
+    <Content Include="Views\Aluno\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

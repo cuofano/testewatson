@@ -34,6 +34,8 @@
     </AssociationSet>
     <EntitySet Name="view_escola" EntityType="personalteacherModel.view_escola" />
     <EntitySet Name="view_documentotraducao" EntityType="personalteacherModel.view_documentotraducao" />
+    <EntitySet Name="view_analises" EntityType="personalteacherModel.view_analises" />
+    <EntitySet Name="view_analises_arquivos" EntityType="personalteacherModel.view_analises_arquivos" />
   </EntityContainer>
   <EntityType Name="aluno">
     <Key>
@@ -202,5 +204,30 @@
     <Property Name="id" Type="Int32" Nullable="false" />
     <Property Name="textodocumento" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="textotraduzido" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="view_analises">
+    <Key>
+      <PropertyRef Name="analiseid" />
+      <PropertyRef Name="analisedt" />
+      <PropertyRef Name="alunoid" />
+      <PropertyRef Name="alunonome" />
+      <PropertyRef Name="analiseresultado" />
+    </Key>
+    <Property Name="analiseid" Type="Int32" Nullable="false" />
+    <Property Name="analisedt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="alunoid" Type="Int32" Nullable="false" />
+    <Property Name="alunonome" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TotalArquivos" Type="Int32" />
+    <Property Name="analiseresultado" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="view_analises_arquivos">
+    <Key>
+      <PropertyRef Name="analise_id" />
+      <PropertyRef Name="arquivobase_id" />
+      <PropertyRef Name="nome" />
+    </Key>
+    <Property Name="analise_id" Type="Int32" Nullable="false" />
+    <Property Name="arquivobase_id" Type="Int32" Nullable="false" />
+    <Property Name="nome" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

@@ -20,6 +20,8 @@
         <AssociationConnector Association="personalteacherModel.FK_usuario_escola" />
         <EntityTypeShape EntityType="personalteacherModel.view_escola" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="personalteacherModel.view_documentotraducao" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="personalteacherModel.view_analises" Width="3.5" PointX="9.75" PointY="2.75" />
+        <EntityTypeShape EntityType="personalteacherModel.view_analises_arquivos" Width="1.5" PointX="3.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

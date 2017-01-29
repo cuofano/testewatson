@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TesteWatson.Models.view_analises>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p><table class="table">
+    <tr>
+
+        <th>
+            Aluno
+        </th>
+        <th>
+            Data da Análise
+        </th>
+        <th>
+            Quantidade de Arquivos
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.alunonome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.analisedt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalArquivos)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.analiseid }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.analiseid })
+            </td>
+        </tr>
+    }
+
+</table>

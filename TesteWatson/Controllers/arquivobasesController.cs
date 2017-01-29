@@ -12,6 +12,7 @@ using Microsoft.Office.Interop.Word;
 using Microsoft.Office;
 using System.Text;
 using Newtonsoft.Json;
+using System.Data.Entity.Core.EntityClient;
 
 namespace TesteWatson.Controllers
 {
@@ -32,15 +33,19 @@ namespace TesteWatson.Controllers
         public ActionResult Index( int[] SelectedFiles)
         {
             List<view_documentotraducao> arquivos = new List<view_documentotraducao>();
-
+            
             arquivos = db.view_documentotraducao.ToList();
             //retornando os IDs dos arquivos
-            string documentoAnalisado = AnalisarDocumento(arquivos);
-            return RedirectToAction("Index");
+            int documentoAnalisado = AnalisarDocumento(arquivos);
+            if (documentoAnalisado == 0) {
+                return RedirectToAction("Index"); 
+            }
+            return RedirectToAction("Details", "analises", new { id = documentoAnalisado });
+
         }
 
 
-        private string AnalisarDocumento(List<view_documentotraducao> arquivos)
+        private int AnalisarDocumento(List<view_documentotraducao> arquivos)
         {
             string json = "";
             /*{
@@ -63,10 +68,11 @@ namespace TesteWatson.Controllers
                 contentItems.language = "en";
                 contentItems.contenttype = "text/plain";
                 contentItems.id = arq.id.ToString();
-                if (arq.textotraduzido == null) {
-                    arq.textotraduzido = TraduzirPost(arq.id,arq.textodocumento);
+                string textotraduzido = arq.textotraduzido;
+                if (textotraduzido == null) {
+                    textotraduzido = TraduzirPost(arq.id,arq.textodocumento);
                 }
-                contentItems.content = arq.textotraduzido;
+                contentItems.content = textotraduzido;
 
                 JSONInputAnalise jsonInputAnalise = new JSONInputAnalise();
                 jsonInputAnalise.contentItems.Add(contentItems);
@@ -86,10 +92,30 @@ namespace TesteWatson.Controllers
             {
                 string resultado = streamReader.ReadToEnd();
                 var model = JsonConvert.DeserializeObject<RetornoApiPerfil>(resultado);
-                return JsonConvert.SerializeObject(model, Formatting.Indented);//resultado;
+                return GravarAnalise(arquivos, model);
             }
         }
 
+        private int GravarAnalise(List<view_documentotraducao> arquivos,RetornoApiPerfil perfil)
+        {
+            analis analiserealizada = new analis();
+            analiserealizada.dtanalise = DateTime.Now;
+            analiserealizada.qtdpalavras = perfil.word_count;
+            analiserealizada.resultado = JsonConvert.SerializeObject(perfil);
+            db.analises.Add(analiserealizada);
+            db.SaveChanges();
+
+            int idgerado = db.analises.Max(a=> a.id);
+            foreach (view_documentotraducao doctrad in arquivos)
+            {
+                arquivoanalis arqana = new arquivoanalis();
+                arqana.analise_id = idgerado;
+                arqana.arquivobase_id = doctrad.id;
+                db.arquivoanalises.Add(arqana);
+                db.SaveChanges();
+            }
+            return idgerado;
+        }
         private string TraduzirPost(int iddocumento,string mensagem)
         {
             /*{
