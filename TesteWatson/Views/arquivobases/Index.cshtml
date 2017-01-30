@@ -10,12 +10,17 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<div class="editor-field">
-    @Html.DropDownList("aluno")
-   
-</div>
-<p/><p /><p />
 @using (Html.BeginForm("Index", "arquivobases", FormMethod.Post))
+{
+<div class="editor-field">
+   
+    @Html.DropDownList("alunobag", "Todos os alunos")  <input type="submit" value="Selecionar" />
+
+
+</div>
+}
+<p/><p /><p />
+@using (Html.BeginForm("Analisar", "arquivobases", FormMethod.Post))
 {
     <table class="table">
         <tr>
@@ -36,7 +41,7 @@
          @foreach (var item in Model) {
         <tr>
             <td>
-                <input type="checkbox" name="SelectedFiles" value=@item.id />@Html.DisplayFor(modelItem => item.nome)
+                <input type="checkbox" name="SelectedFiles" value=@item.id />  @Html.DisplayFor(modelItem => item.nome)
 
             </td>
             <td>

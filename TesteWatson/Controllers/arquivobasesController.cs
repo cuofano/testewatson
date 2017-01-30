@@ -19,7 +19,7 @@ namespace TesteWatson.Controllers
     public class arquivobasesController : Controller
     {
         private personalteacherEntities db = new personalteacherEntities();
-
+        /*
         // GET: arquivobases
         public ActionResult Index()
         {
@@ -29,12 +29,43 @@ namespace TesteWatson.Controllers
             var arquivobases = db.arquivobases.Include(a => a.aluno);
             return View(arquivobases.ToList());
         }
+        */
+        [HttpGet]
+        public ActionResult Index()
+        {
+            
+            personalteacherEntities entities = new personalteacherEntities();
+            ViewBag.alunobag = new SelectList(entities.alunoes, "id", "nome");
+            return View(db.arquivobases.Include(a => a.aluno).ToList());
+        }
+
+        
         [HttpPost]
-        public ActionResult Index( int[] SelectedFiles)
+        public ActionResult Index(int[] alunobag)
+        {
+            if (alunobag.Count() == 0)
+            {
+                return RedirectToAction("Index");
+            }
+            int idAluno = alunobag.First();
+            if (idAluno == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            personalteacherEntities entities = new personalteacherEntities();
+            ViewBag.alunobag = new SelectList(entities.alunoes, "id", "nome");
+            return View (db.arquivobases.Where(i => i.aluno.id == idAluno).ToList());
+            
+        }
+        
+        [HttpPost]
+        public ActionResult Analisar( int[] SelectedFiles)
         {
             List<view_documentotraducao> arquivos = new List<view_documentotraducao>();
-            
-            arquivos = db.view_documentotraducao.ToList();
+
+            arquivos = db.view_documentotraducao.Where(a => SelectedFiles.Any(i => a.id == i)).ToList();
+            //arquivos = db.view_documentotraducao.ToList();
             //retornando os IDs dos arquivos
             int documentoAnalisado = AnalisarDocumento(arquivos);
             if (documentoAnalisado == 0) {
