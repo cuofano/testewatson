@@ -9,9 +9,11 @@
 
 namespace TesteWatson.Models
 {
+    using PropertyTools.DataAnnotations;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class aluno
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,6 +26,9 @@ namespace TesteWatson.Models
         public int escola_id { get; set; }
         public string matricula { get; set; }
         public string nome { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayName("data de nascimento")]
         public System.DateTime dtnascimento { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

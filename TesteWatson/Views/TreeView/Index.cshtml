@@ -1,0 +1,30 @@
+@using TesteWatson.Helpers
+@model List<TesteWatson.Controllers.TreeViewLocation>
+
+<h2>TreeView</h2>
+
+
+@(Html.TreeView(Model)
+    .EmptyContent("No locations have been defined yet!")
+    .Children(m => m.ChildLocations)
+    .HtmlAttributes(new { id = "tree" })
+    .ChildrenHtmlAttributes(new { @class = "subItem" })
+    .ItemText(m => m.Name)
+    .ItemTemplate(
+        @<text>
+            <a href="#@item.Id">@item.Name</a>
+        </text>)
+)
+
+
+@(Html.TreeView(ViewBag.model.personality as IEnumerable<Personality>)
+            .EmptyContent("No locations have been defined yet!")
+            .Children(m => m.children)
+    .HtmlAttributes(new { id = "tree" })
+    .ChildrenHtmlAttributes(new { @class = "subItem" })
+    .ItemText(m => m.name)
+    .ItemTemplate(
+    @<text>
+        <a href="#@item.Id">@item.Name - @item.percentile</a>
+    </text>)
+)

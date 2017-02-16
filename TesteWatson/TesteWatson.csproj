@@ -77,6 +77,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PropertyTools, Version=2.0.1.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyTools.Wpf.2.0.1\lib\net45\PropertyTools.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PropertyTools.Wpf, Version=2.0.1.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyTools.Wpf.2.0.1\lib\net45\PropertyTools.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -217,10 +225,12 @@
     <Compile Include="Controllers\ArquivosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TreeViewController.cs" />
     <Compile Include="DAL\PersonalTeacher.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\TreeView.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\aluno.cs">
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
@@ -263,6 +273,7 @@
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TraducaoModels.cs" />
+    <Compile Include="Models\TreeViewModels.cs" />
     <Compile Include="Models\usuario.cs">
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
@@ -386,6 +397,7 @@
     <Content Include="Views\analises\Index.cshtml" />
     <Content Include="Views\Aluno\Delete.cshtml" />
     <Content Include="Views\Aluno\Edit.cshtml" />
+    <Content Include="Views\TreeView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

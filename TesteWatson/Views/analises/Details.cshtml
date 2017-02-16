@@ -1,4 +1,6 @@
-﻿@model TesteWatson.Models.view_analises
+﻿@using TesteWatson.Helpers
+@using TesteWatson.Models
+@model TesteWatson.Models.view_analises
 
 @{
     ViewBag.Title = "Details";
@@ -17,14 +19,29 @@
             <li>@Html.DisplayFor(modelitem => item.nome)</li>
 
         }
+
     </ol>
     <p />
     <dl class="dl-horizontal">
         <dd>
-            @Html.DisplayFor(model => model.analiseresultado)
-        </dd>
+            
+       
+        
+         </dd>
 
     </dl>
+    @(Html.TreeView(ViewBag.model as IEnumerable<TreeViewModels>)
+            .EmptyContent("Nada foi localizado!")
+            .Children(m => m.Nodes)
+    .HtmlAttributes(new { id = "tree" })
+    .ChildrenHtmlAttributes(new { @class = "subItem" })
+    .ItemText(m => m.Name)
+    .ItemTemplate(
+    @<text>
+        <a href="#@item.Id">@item.Name - @item.Nota</a>
+    </text>)
+    )
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |

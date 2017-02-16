@@ -31,7 +31,7 @@ namespace TesteWatson.Controllers
 
             var request = (HttpWebRequest)WebRequest.Create("https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2016-10-20&consumption_preferences=true&raw_scores=true");
 
-            request.Credentials = new NetworkCredential("75013c0a-5348-4af9-add7-d42a08fea139", "za4z3gyaD4TG");
+            request.Credentials = new NetworkCredential("fb9ee857-3887-4c69-974b-1ebda70c1866", "I82T2Wcq8DQF");
             request.ContentType = "application/json";
             request.Method = "POST";
             using (StreamReader sr = new StreamReader(Server.MapPath("~/profile.json")))
@@ -65,7 +65,7 @@ namespace TesteWatson.Controllers
             } */
             var request = (HttpWebRequest)WebRequest.Create("https://gateway.watsonplatform.net/language-translator/api/v2/translate");
 
-            request.Credentials = new NetworkCredential("998e5723-0e90-454e-9f31-2930a7643144", "k4NCxrQHQKRQ");
+            request.Credentials = new NetworkCredential("bf735c49-f328-4b23-a3eb-878cad73c1b0", "YU2CV08BHnYB");
             request.ContentType = "application/json";
             request.Method = "POST";
 

@@ -43,7 +43,7 @@ namespace TesteWatson.Controllers
                                                     + "&text=" + traducao.strTextoOriginal
                                                     );
 
-            request.Credentials = new NetworkCredential("998e5723-0e90-454e-9f31-2930a7643144", "k4NCxrQHQKRQ");
+            request.Credentials = new NetworkCredential("bf735c49-f328-4b23-a3eb-878cad73c1b0", "YU2CV08BHnYB");
             WebResponse response = request.GetResponse();
 
             using (var twitpicResponse = (HttpWebResponse)request.GetResponse())

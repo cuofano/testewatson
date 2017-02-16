@@ -175,3 +175,9 @@ C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\
 C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\obj\Debug\TesteWatson.dll
 C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\obj\Debug\TesteWatson.pdb
 C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\obj\Debug\TesteWatson.csprojResolveAssemblyReference.cache
+C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\bin\PropertyTools.dll
+C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\bin\PropertyTools.Wpf.dll
+C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\bin\PropertyTools.pdb
+C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\bin\PropertyTools.xml
+C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\bin\PropertyTools.Wpf.pdb
+C:\Users\00693\Documents\visual studio 2015\Projects\GITtestewatson\TesteWatson\bin\PropertyTools.Wpf.xml

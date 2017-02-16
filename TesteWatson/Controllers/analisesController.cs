@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -34,7 +35,99 @@ namespace TesteWatson.Controllers
             {
                 return HttpNotFound();
             }
+            var model = JsonConvert.DeserializeObject<RetornoApiPerfil>(view_analises.analiseresultado);
+            ViewBag.model = GerarArvore(model);
             return View(view_analises);
+        }
+
+        public static List<TreeViewModels> GerarArvore(RetornoApiPerfil analise)
+        {
+            var analisedesm = new List<TreeViewModels>();
+
+            analisedesm.Add(new TreeViewModels
+            {
+                Name="Personalidade",
+                Nodes=GerarArvorePersonalidade(analise)
+            });
+            analisedesm.Add(new TreeViewModels
+            {
+                Name = "Necessidades",
+                Nodes = GerarArvoreNeeds(analise)
+            });
+            analisedesm.Add(new TreeViewModels
+            {
+                Name = "Valores",
+                Nodes = GerarArvoreValores(analise)
+            });
+
+            return analisedesm;
+        }
+
+        private static List<TreeViewModels> GerarArvorePersonalidade(RetornoApiPerfil analise)
+        {
+            var personalidades = new List<TreeViewModels>();
+
+            foreach (Personality personalidade in analise.personality)
+            {
+                personalidades.Add(new TreeViewModels
+                {
+                    Name = personalidade.name,
+                    Nota = personalidade.percentile,
+                    Nodes = GerarArvoreChield(personalidade)
+                });
+            }
+
+
+            return personalidades;
+        }
+        private static List<TreeViewModels> GerarArvoreChield(Personality personalidade)
+        {
+            var childs = new List<TreeViewModels>();
+
+            foreach (Child child in personalidade.children)
+            {
+                childs.Add(new TreeViewModels
+                {
+                    Name = child.name,
+                    Nota = child.percentile
+                });
+            }
+
+
+            return childs;
+        }
+        private static List<TreeViewModels> GerarArvoreNeeds(RetornoApiPerfil analise)
+        {
+            var needs = new List<TreeViewModels>();
+
+            foreach (Need need in analise.needs)
+            {
+                needs.Add(new TreeViewModels
+                {
+                    Name = need.name,
+                    Nota = need.percentile
+                });
+            }
+
+
+            return needs;
+        }
+
+        private static List<TreeViewModels>GerarArvoreValores(RetornoApiPerfil analise)
+        {
+            var valores = new List<TreeViewModels>();
+            
+            foreach(Value val in analise.values)
+            {
+                valores.Add(new TreeViewModels
+                {
+                    Name = val.name,
+                    Nota = val.percentile
+                });
+            }
+                
+            
+            return valores;
         }
 
         // GET: analises/Create

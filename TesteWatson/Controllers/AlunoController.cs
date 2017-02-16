@@ -17,7 +17,7 @@ namespace TesteWatson.Controllers
         {
 
             personalteacherEntities entities = new personalteacherEntities();
-            return View(from aluno in entities.alunoes.Take(10) select aluno);
+            return View(from aluno in entities.alunoes.Take(50) select aluno);
         }
 
 

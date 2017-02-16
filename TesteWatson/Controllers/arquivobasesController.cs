@@ -39,6 +39,7 @@ namespace TesteWatson.Controllers
             return View(db.arquivobases.Include(a => a.aluno).ToList());
         }
 
+
         
         [HttpPost]
         public ActionResult Index(int[] alunobag)
@@ -87,7 +88,7 @@ namespace TesteWatson.Controllers
 
             var request = (HttpWebRequest)WebRequest.Create("https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2016-10-20&consumption_preferences=true&raw_scores=true");
 
-            request.Credentials = new NetworkCredential("75013c0a-5348-4af9-add7-d42a08fea139", "za4z3gyaD4TG");
+            request.Credentials = new NetworkCredential("fb9ee857-3887-4c69-974b-1ebda70c1866", "I82T2Wcq8DQF");
             request.ContentType = "application/json";
             request.Method = "POST";
             request.Headers.Add("Accept-Language: pt-br");
@@ -156,7 +157,7 @@ namespace TesteWatson.Controllers
             } */
             var request = (HttpWebRequest)WebRequest.Create("https://gateway.watsonplatform.net/language-translator/api/v2/translate");
 
-            request.Credentials = new NetworkCredential("998e5723-0e90-454e-9f31-2930a7643144", "k4NCxrQHQKRQ");
+            request.Credentials = new NetworkCredential("bf735c49-f328-4b23-a3eb-878cad73c1b0", "YU2CV08BHnYB");
             request.ContentType = "application/json";
             request.Accept = "application/json";
             request.Headers.Add("ContentType: application/json");
@@ -248,12 +249,12 @@ namespace TesteWatson.Controllers
                     arquivobase.dtupload = DateTime.Now;
                     db.arquivobases.Add(arquivobase);
                     db.SaveChanges();
-                    
-                    return RedirectToAction("Index");
+
+                   // return View(); 
                 }
 
                 ViewBag.aluno_id = new SelectList(db.alunoes, "id", "matricula", arquivobase.aluno_id);
-                return View(arquivobase);
+                return View();
             }
             return View(arquivobase);
         }
@@ -266,7 +267,7 @@ namespace TesteWatson.Controllers
             //abrir word
             object word = Path.Combine(caminho, arquivo);
             ApplicationClass applicationclass = new ApplicationClass();
-            applicationclass.Documents.Open(ref word, true,
+            applicationclass.Documents.Open(ref word, false,
                                     ref missingType, ref missingType, ref missingType,
                                     ref missingType, ref missingType, ref missingType,
                                     ref missingType, ref missingType, false,
