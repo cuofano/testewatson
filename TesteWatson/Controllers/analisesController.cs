@@ -22,7 +22,30 @@ namespace TesteWatson.Controllers
         }
 
         // GET: analises/Details/5
-        public ActionResult Details(int? id)
+
+        /*Essa é a do sunboard
+         * public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            view_analises view_analises = db.view_analises.SingleOrDefault(a => a.analiseid == id);
+            view_analises.analises_arquivos = db.view_analises_arquivos.Where(b => b.analise_id == id).ToList();
+
+            if (view_analises == null)
+            {
+                return HttpNotFound();
+            }
+            var model = JsonConvert.DeserializeObject<RetornoApiPerfil>(view_analises.analiseresultado);
+            ViewData["defaultData"] =  GerarArvore(model);
+            return View();
+        }
+        */
+        /*Essa é a Oficial
+         */
+        //GET: analises/Details/5
+            public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -72,7 +95,7 @@ namespace TesteWatson.Controllers
                 personalidades.Add(new TreeViewModels
                 {
                     Name = personalidade.name,
-                    Nota = personalidade.percentile,
+                    Nota = personalidade.percentile *100,
                     Nodes = GerarArvoreChield(personalidade)
                 });
             }
@@ -89,7 +112,7 @@ namespace TesteWatson.Controllers
                 childs.Add(new TreeViewModels
                 {
                     Name = child.name,
-                    Nota = child.percentile
+                    Nota = child.percentile * 100
                 });
             }
 
@@ -105,7 +128,7 @@ namespace TesteWatson.Controllers
                 needs.Add(new TreeViewModels
                 {
                     Name = need.name,
-                    Nota = need.percentile
+                    Nota = need.percentile * 100
                 });
             }
 
@@ -122,7 +145,7 @@ namespace TesteWatson.Controllers
                 valores.Add(new TreeViewModels
                 {
                     Name = val.name,
-                    Nota = val.percentile
+                    Nota = val.percentile * 100
                 });
             }
                 

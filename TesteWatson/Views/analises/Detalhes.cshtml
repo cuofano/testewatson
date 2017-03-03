@@ -1,0 +1,43 @@
+﻿@using TesteWatson.Helpers
+@using TesteWatson.Models
+@using Syncfusion.MVC.EJ
+@model TesteWatson.Models.view_analises
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+@using Syncfusion.JavaScript.DataVisualization
+
+@section SampleHeading{<span class="sampleName">Sunburst Chart/ Default </span>}
+
+@section ControlsSection{
+    @{
+        var datasource = ViewData["defaultData"];
+    }
+    <div>
+        @(Html.EJ().SunburstChart("container")
+                    .ValueMemberPath("Nota")
+                    .DataSource(datasource)
+                    .Levels(lv =>
+                    {
+                        lv.GroupMemberPath("Nome").Add();
+
+                    })
+                     .DataLabelSettings(dt => dt.Visible(true))
+                     .Tooltip(tp => tp.Visible(true))
+                     .InnerRadius(0.2)
+                     .Size(sz => sz.Height("600"))
+                     .Title(ti => ti.Text("Employees Count"))
+                     .Legend(lg => lg.Visible(true).Position(SunburstLegendPosition.Top))
+                     .Load("loadSunBurstTheme")
+
+        )
+    </div>
+}
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

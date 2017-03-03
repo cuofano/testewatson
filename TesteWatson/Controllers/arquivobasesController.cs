@@ -168,7 +168,7 @@ namespace TesteWatson.Controllers
             gjc.target = "en";
             gjc.text = new string[] { mensagem };
             string arqJSon = JsonConvert.SerializeObject(gjc, Formatting.Indented);
-
+            //erro ta aqui....
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
                 streamWriter.Write(arqJSon);
