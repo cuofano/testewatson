@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TesteWatson.Models.alunosporsala>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.aluno.matricula)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sala.ano_escolar)
+        </th>
+        <th></th>
+    </tr>
+@if (Model != null) { 
+    foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.aluno.matricula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sala.ano_escolar)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            </td>
+        </tr>
+    }
+}
+</table>

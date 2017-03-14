@@ -1,0 +1,67 @@
+﻿@model TesteWatson.Models.sala
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>sala</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ano_escolar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ano_escolar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.turma)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.turma)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ano_corrente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ano_corrente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ativo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ativo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.escola.nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.escola.nome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

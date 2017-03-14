@@ -13,13 +13,13 @@ namespace TesteWatson.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
     public partial class aluno
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public aluno()
         {
             this.arquivobases = new HashSet<arquivobas>();
+            this.alunosporsalas = new HashSet<alunosporsala>();
         }
     
         public int id { get; set; }
@@ -34,5 +34,7 @@ namespace TesteWatson.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<arquivobas> arquivobases { get; set; }
         public virtual escola escola { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<alunosporsala> alunosporsalas { get; set; }
     }
 }

@@ -36,5 +36,7 @@ namespace TesteWatson.Models
         public virtual DbSet<view_documentotraducao> view_documentotraducao { get; set; }
         public virtual DbSet<view_analises> view_analises { get; set; }
         public virtual DbSet<view_analises_arquivos> view_analises_arquivos { get; set; }
+        public virtual DbSet<alunosporsala> alunosporsalas { get; set; }
+        public virtual DbSet<sala> salas { get; set; }
     }
 }

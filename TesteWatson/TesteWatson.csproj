@@ -48,6 +48,10 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.7\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -255,6 +259,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlunoController.cs" />
     <Compile Include="Controllers\AlunoModelsController.cs" />
+    <Compile Include="Controllers\alunosporsalasController.cs" />
     <Compile Include="Controllers\analisController.cs" />
     <Compile Include="Controllers\AnalisePerfilController.cs" />
     <Compile Include="Controllers\analisesController.cs" />
@@ -262,6 +267,7 @@
     <Compile Include="Controllers\ArquivosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\salasController.cs" />
     <Compile Include="Controllers\TreeViewController.cs" />
     <Compile Include="DAL\PersonalTeacher.cs" />
     <Compile Include="Global.asax.cs">
@@ -273,6 +279,9 @@
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AlunoModels.cs" />
+    <Compile Include="Models\alunosporsala.cs">
+      <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\analis.cs">
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
@@ -306,6 +315,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RetornoApiTraducaoModel.cs" />
+    <Compile Include="Models\sala.cs">
+      <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\traducaoarquivo.cs">
       <DependentUpon>PersonalTeacherEDM.tt</DependentUpon>
     </Compile>
@@ -334,6 +346,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\canvas.css" />
+    <Content Include="Content\Gridmvc.css" />
+    <Content Include="Content\simple-sidebar.css" />
     <Content Include="Content\tree.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -368,14 +383,19 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Grid.mvc.readme" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\gridmvc.js" />
+    <Content Include="Scripts\gridmvc.lang.ru.js" />
+    <Content Include="Scripts\gridmvc.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -450,6 +470,19 @@
     <Content Include="Views\Aluno\Edit.cshtml" />
     <Content Include="Views\TreeView\Index.cshtml" />
     <Content Include="Views\analises\Detalhes.cshtml" />
+    <Content Include="Views\Shared\_MenuVertical.cshtml" />
+    <Content Include="Views\salas\Create.cshtml" />
+    <Content Include="Views\salas\Delete.cshtml" />
+    <Content Include="Views\salas\Details.cshtml" />
+    <Content Include="Views\salas\Edit.cshtml" />
+    <Content Include="Views\salas\Index.cshtml" />
+    <Content Include="Views\alunosporsalas\Create.cshtml" />
+    <Content Include="Views\alunosporsalas\Delete.cshtml" />
+    <Content Include="Views\alunosporsalas\Details.cshtml" />
+    <Content Include="Views\alunosporsalas\Edit.cshtml" />
+    <Content Include="Views\alunosporsalas\Index.cshtml" />
+    <Content Include="Views\Shared\_GridPager.cshtml" />
+    <Content Include="Views\Shared\_Grid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

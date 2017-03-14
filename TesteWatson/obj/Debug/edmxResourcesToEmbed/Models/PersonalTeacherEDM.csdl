@@ -36,6 +36,20 @@
     <EntitySet Name="view_documentotraducao" EntityType="personalteacherModel.view_documentotraducao" />
     <EntitySet Name="view_analises" EntityType="personalteacherModel.view_analises" />
     <EntitySet Name="view_analises_arquivos" EntityType="personalteacherModel.view_analises_arquivos" />
+    <EntitySet Name="alunosporsalas" EntityType="personalteacherModel.alunosporsala" />
+    <EntitySet Name="salas" EntityType="personalteacherModel.sala" />
+    <AssociationSet Name="FK_alunosporsala_alunos" Association="personalteacherModel.FK_alunosporsala_alunos">
+      <End Role="aluno" EntitySet="alunoes" />
+      <End Role="alunosporsala" EntitySet="alunosporsalas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_alunosporsala_sala" Association="personalteacherModel.FK_alunosporsala_sala">
+      <End Role="sala" EntitySet="salas" />
+      <End Role="alunosporsala" EntitySet="alunosporsalas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_escola_sala" Association="personalteacherModel.FK_escola_sala">
+      <End Role="escola" EntitySet="escolas" />
+      <End Role="sala" EntitySet="salas" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="aluno">
     <Key>
@@ -48,6 +62,7 @@
     <Property Name="dtnascimento" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="arquivobases" Relationship="personalteacherModel.FK_arquivobase_aluno" FromRole="aluno" ToRole="arquivobas" />
     <NavigationProperty Name="escola" Relationship="personalteacherModel.FK_escola_aluno" FromRole="aluno" ToRole="escola" />
+    <NavigationProperty Name="alunosporsalas" Relationship="personalteacherModel.FK_alunosporsala_alunos" FromRole="aluno" ToRole="alunosporsala" />
   </EntityType>
   <EntityType Name="analis">
     <Key>
@@ -92,6 +107,7 @@
     <Property Name="cnpj" Type="String" Nullable="false" MaxLength="14" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="alunoes" Relationship="personalteacherModel.FK_escola_aluno" FromRole="escola" ToRole="aluno" />
     <NavigationProperty Name="usuarios" Relationship="personalteacherModel.FK_usuario_escola" FromRole="escola" ToRole="usuario" />
+    <NavigationProperty Name="salas" Relationship="personalteacherModel.FK_escola_sala" FromRole="escola" ToRole="sala" />
   </EntityType>
   <EntityType Name="traducaoarquivo">
     <Key>
@@ -230,4 +246,64 @@
     <Property Name="arquivobase_id" Type="Int32" Nullable="false" />
     <Property Name="nome" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="alunosporsala">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="aluno_id" Type="Int32" Nullable="false" />
+    <Property Name="sala_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="aluno" Relationship="personalteacherModel.FK_alunosporsala_alunos" FromRole="alunosporsala" ToRole="aluno" />
+    <NavigationProperty Name="sala" Relationship="personalteacherModel.FK_alunosporsala_sala" FromRole="alunosporsala" ToRole="sala" />
+  </EntityType>
+  <EntityType Name="sala">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="escola_id" Type="Int32" Nullable="false" />
+    <Property Name="ano_escolar" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+    <Property Name="turma" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Name="nome" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ano_corrente" Type="Int16" Nullable="false" />
+    <Property Name="ativo" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="alunosporsalas" Relationship="personalteacherModel.FK_alunosporsala_sala" FromRole="sala" ToRole="alunosporsala" />
+    <NavigationProperty Name="escola" Relationship="personalteacherModel.FK_escola_sala" FromRole="sala" ToRole="escola" />
+  </EntityType>
+  <Association Name="FK_alunosporsala_alunos">
+    <End Type="personalteacherModel.aluno" Role="aluno" Multiplicity="1" />
+    <End Type="personalteacherModel.alunosporsala" Role="alunosporsala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aluno">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="alunosporsala">
+        <PropertyRef Name="aluno_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_alunosporsala_sala">
+    <End Type="personalteacherModel.sala" Role="sala" Multiplicity="1" />
+    <End Type="personalteacherModel.alunosporsala" Role="alunosporsala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sala">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="alunosporsala">
+        <PropertyRef Name="sala_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_escola_sala">
+    <End Type="personalteacherModel.escola" Role="escola" Multiplicity="1" />
+    <End Type="personalteacherModel.sala" Role="sala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="escola">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="sala">
+        <PropertyRef Name="escola_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

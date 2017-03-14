@@ -19,6 +19,7 @@ namespace TesteWatson.Models
         {
             this.alunoes = new HashSet<aluno>();
             this.usuarios = new HashSet<usuario>();
+            this.salas = new HashSet<sala>();
         }
     
         public int id { get; set; }
@@ -29,5 +30,7 @@ namespace TesteWatson.Models
         public virtual ICollection<aluno> alunoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usuario> usuarios { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sala> salas { get; set; }
     }
 }

@@ -113,5 +113,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="alunosporsalas">
+      <EntityTypeMapping TypeName="personalteacherModel.alunosporsala">
+        <MappingFragment StoreEntitySet="alunosporsala">
+          <ScalarProperty Name="sala_id" ColumnName="sala_id" />
+          <ScalarProperty Name="aluno_id" ColumnName="aluno_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="salas">
+      <EntityTypeMapping TypeName="personalteacherModel.sala">
+        <MappingFragment StoreEntitySet="sala">
+          <ScalarProperty Name="ativo" ColumnName="ativo" />
+          <ScalarProperty Name="ano_corrente" ColumnName="ano_corrente" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="turma" ColumnName="turma" />
+          <ScalarProperty Name="ano_escolar" ColumnName="ano_escolar" />
+          <ScalarProperty Name="escola_id" ColumnName="escola_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -15,6 +15,14 @@
           <Property Name="nome" Type="varchar(max)" Nullable="false" />
           <Property Name="dtnascimento" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="alunosporsala">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aluno_id" Type="int" Nullable="false" />
+          <Property Name="sala_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="analises">
           <Key>
             <PropertyRef Name="id" />
@@ -50,6 +58,18 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nome" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="cnpj" Type="char" MaxLength="14" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sala">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="escola_id" Type="int" Nullable="false" />
+          <Property Name="ano_escolar" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="turma" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="nome" Type="varchar(max)" Nullable="false" />
+          <Property Name="ano_corrente" Type="smallint" Nullable="false" />
+          <Property Name="ativo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="traducaoarquivoes">
           <Key>
@@ -122,6 +142,30 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nome" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <Association Name="FK_alunosporsala_alunos">
+          <End Role="alunoes" Type="Self.alunoes" Multiplicity="1" />
+          <End Role="alunosporsala" Type="Self.alunosporsala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alunoes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="alunosporsala">
+              <PropertyRef Name="aluno_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_alunosporsala_sala">
+          <End Role="sala" Type="Self.sala" Multiplicity="1" />
+          <End Role="alunosporsala" Type="Self.alunosporsala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sala">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="alunosporsala">
+              <PropertyRef Name="sala_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_arquivoanalise_analise">
           <End Role="analises" Type="Self.analises" Multiplicity="1" />
           <End Role="arquivoanalises" Type="Self.arquivoanalises" Multiplicity="*" />
@@ -170,6 +214,18 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_escola_sala">
+          <End Role="escolas" Type="Self.escolas" Multiplicity="1" />
+          <End Role="sala" Type="Self.sala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="escolas">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sala">
+              <PropertyRef Name="escola_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_traducaoarquivo_arquivobase">
           <End Role="arquivobases" Type="Self.arquivobases" Multiplicity="1" />
           <End Role="traducaoarquivoes" Type="Self.traducaoarquivoes" Multiplicity="*" />
@@ -196,10 +252,12 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
         </Association>
         <EntityContainer Name="personalteacherModelStoreContainer">
           <EntitySet Name="alunoes" EntityType="Self.alunoes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="alunosporsala" EntityType="Self.alunosporsala" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="analises" EntityType="Self.analises" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="arquivoanalises" EntityType="Self.arquivoanalises" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="arquivobases" EntityType="Self.arquivobases" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="escolas" EntityType="Self.escolas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sala" EntityType="Self.sala" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="traducaoarquivoes" EntityType="Self.traducaoarquivoes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="view_analises" EntityType="Self.view_analises" store:Type="Views" store:Schema="dbo">
@@ -232,6 +290,14 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
     [view_escola].[nome] AS [nome]
     FROM [dbo].[view_escola] AS [view_escola]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_alunosporsala_alunos" Association="Self.FK_alunosporsala_alunos">
+            <End Role="alunoes" EntitySet="alunoes" />
+            <End Role="alunosporsala" EntitySet="alunosporsala" />
+          </AssociationSet>
+          <AssociationSet Name="FK_alunosporsala_sala" Association="Self.FK_alunosporsala_sala">
+            <End Role="sala" EntitySet="sala" />
+            <End Role="alunosporsala" EntitySet="alunosporsala" />
+          </AssociationSet>
           <AssociationSet Name="FK_arquivoanalise_analise" Association="Self.FK_arquivoanalise_analise">
             <End Role="analises" EntitySet="analises" />
             <End Role="arquivoanalises" EntitySet="arquivoanalises" />
@@ -247,6 +313,10 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
           <AssociationSet Name="FK_escola_aluno" Association="Self.FK_escola_aluno">
             <End Role="escolas" EntitySet="escolas" />
             <End Role="alunoes" EntitySet="alunoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_escola_sala" Association="Self.FK_escola_sala">
+            <End Role="escolas" EntitySet="escolas" />
+            <End Role="sala" EntitySet="sala" />
           </AssociationSet>
           <AssociationSet Name="FK_traducaoarquivo_arquivobase" Association="Self.FK_traducaoarquivo_arquivobase">
             <End Role="arquivobases" EntitySet="arquivobases" />
@@ -297,6 +367,20 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
           <EntitySet Name="view_documentotraducao" EntityType="personalteacherModel.view_documentotraducao" />
           <EntitySet Name="view_analises" EntityType="personalteacherModel.view_analises" />
           <EntitySet Name="view_analises_arquivos" EntityType="personalteacherModel.view_analises_arquivos" />
+          <EntitySet Name="alunosporsalas" EntityType="personalteacherModel.alunosporsala" />
+          <EntitySet Name="salas" EntityType="personalteacherModel.sala" />
+          <AssociationSet Name="FK_alunosporsala_alunos" Association="personalteacherModel.FK_alunosporsala_alunos">
+            <End Role="aluno" EntitySet="alunoes" />
+            <End Role="alunosporsala" EntitySet="alunosporsalas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_alunosporsala_sala" Association="personalteacherModel.FK_alunosporsala_sala">
+            <End Role="sala" EntitySet="salas" />
+            <End Role="alunosporsala" EntitySet="alunosporsalas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_escola_sala" Association="personalteacherModel.FK_escola_sala">
+            <End Role="escola" EntitySet="escolas" />
+            <End Role="sala" EntitySet="salas" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="aluno">
           <Key>
@@ -309,6 +393,7 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
           <Property Name="dtnascimento" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="arquivobases" Relationship="personalteacherModel.FK_arquivobase_aluno" FromRole="aluno" ToRole="arquivobas" />
           <NavigationProperty Name="escola" Relationship="personalteacherModel.FK_escola_aluno" FromRole="aluno" ToRole="escola" />
+          <NavigationProperty Name="alunosporsalas" Relationship="personalteacherModel.FK_alunosporsala_alunos" FromRole="aluno" ToRole="alunosporsala" />
         </EntityType>
         <EntityType Name="analis">
           <Key>
@@ -353,6 +438,7 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
           <Property Name="cnpj" Type="String" Nullable="false" MaxLength="14" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="alunoes" Relationship="personalteacherModel.FK_escola_aluno" FromRole="escola" ToRole="aluno" />
           <NavigationProperty Name="usuarios" Relationship="personalteacherModel.FK_usuario_escola" FromRole="escola" ToRole="usuario" />
+          <NavigationProperty Name="salas" Relationship="personalteacherModel.FK_escola_sala" FromRole="escola" ToRole="sala" />
         </EntityType>
         <EntityType Name="traducaoarquivo">
           <Key>
@@ -491,6 +577,66 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
           <Property Name="arquivobase_id" Type="Int32" Nullable="false" />
           <Property Name="nome" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="alunosporsala">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aluno_id" Type="Int32" Nullable="false" />
+          <Property Name="sala_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="aluno" Relationship="personalteacherModel.FK_alunosporsala_alunos" FromRole="alunosporsala" ToRole="aluno" />
+          <NavigationProperty Name="sala" Relationship="personalteacherModel.FK_alunosporsala_sala" FromRole="alunosporsala" ToRole="sala" />
+        </EntityType>
+        <EntityType Name="sala">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="escola_id" Type="Int32" Nullable="false" />
+          <Property Name="ano_escolar" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="turma" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="nome" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ano_corrente" Type="Int16" Nullable="false" />
+          <Property Name="ativo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="alunosporsalas" Relationship="personalteacherModel.FK_alunosporsala_sala" FromRole="sala" ToRole="alunosporsala" />
+          <NavigationProperty Name="escola" Relationship="personalteacherModel.FK_escola_sala" FromRole="sala" ToRole="escola" />
+        </EntityType>
+        <Association Name="FK_alunosporsala_alunos">
+          <End Type="personalteacherModel.aluno" Role="aluno" Multiplicity="1" />
+          <End Type="personalteacherModel.alunosporsala" Role="alunosporsala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aluno">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="alunosporsala">
+              <PropertyRef Name="aluno_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_alunosporsala_sala">
+          <End Type="personalteacherModel.sala" Role="sala" Multiplicity="1" />
+          <End Type="personalteacherModel.alunosporsala" Role="alunosporsala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sala">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="alunosporsala">
+              <PropertyRef Name="sala_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_escola_sala">
+          <End Type="personalteacherModel.escola" Role="escola" Multiplicity="1" />
+          <End Type="personalteacherModel.sala" Role="sala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="escola">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sala">
+              <PropertyRef Name="escola_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -606,6 +752,28 @@ warning 6002: The table/view 'personalteacher.dbo.view_escola' does not have a p
                 <ScalarProperty Name="nome" ColumnName="nome" />
                 <ScalarProperty Name="arquivobase_id" ColumnName="arquivobase_id" />
                 <ScalarProperty Name="analise_id" ColumnName="analise_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="alunosporsalas">
+            <EntityTypeMapping TypeName="personalteacherModel.alunosporsala">
+              <MappingFragment StoreEntitySet="alunosporsala">
+                <ScalarProperty Name="sala_id" ColumnName="sala_id" />
+                <ScalarProperty Name="aluno_id" ColumnName="aluno_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="salas">
+            <EntityTypeMapping TypeName="personalteacherModel.sala">
+              <MappingFragment StoreEntitySet="sala">
+                <ScalarProperty Name="ativo" ColumnName="ativo" />
+                <ScalarProperty Name="ano_corrente" ColumnName="ano_corrente" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="turma" ColumnName="turma" />
+                <ScalarProperty Name="ano_escolar" ColumnName="ano_escolar" />
+                <ScalarProperty Name="escola_id" ColumnName="escola_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

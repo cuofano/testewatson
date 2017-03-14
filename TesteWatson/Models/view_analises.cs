@@ -20,7 +20,6 @@ namespace TesteWatson.Models
         public string alunonome { get; set; }
         public Nullable<int> TotalArquivos { get; set; }
         public string analiseresultado { get; set; }
-
         public virtual ICollection<view_analises_arquivos> analises_arquivos { get; set; }
     }
 }

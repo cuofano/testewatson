@@ -1,0 +1,100 @@
+﻿@model TesteWatson.Models.sala
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using GridMvc.Html
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>  
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>sala</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            
+            @Html.LabelFor(model => model.escola_id, "Escola:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("escola_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.escola_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ano_escolar,"Série:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ano_escolar, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ano_escolar, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.turma, "Turma:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.turma, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.turma, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nome,"Nome:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ano_corrente, "Ano:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ano_corrente, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ano_corrente, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ativo,"Ativa:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.ativo)
+                    @Html.ValidationMessageFor(model => model.ativo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+       
+            <div class="form-group">
+
+            
+                @Html.Grid(Model.alunos).Columns(columns =>
+                {
+                   columns.Add(c => c.matricula).Titled("Matrícula").Filterable(true);
+                   columns.Add(c => c.nome).Titled("Nome").Filterable(true);
+                   columns.Add()
+                   .Encoded(false)
+                   .Sanitized(false)
+                   .SetWidth(30);
+
+               }).WithPaging(20).Sortable(true)
+
+            </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
